@@ -7,32 +7,31 @@ import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "menu_table", foreignKeys = {
-        @ForeignKey(entity = Restaurant.class,
-                    parentColumns = "restaurantId",
-                    childColumns = "restaurantID",
-                    onDelete = CASCADE,
-                    onUpdate = CASCADE),
-        @ForeignKey(entity = Dish.class,
-                    parentColumns = "dishID",
-                    childColumns = "dishID",
-                    onDelete = CASCADE,
-                    onUpdate = CASCADE)
-        }, primaryKeys = {"restaurantID" , "dishID"}, indices = {@Index(value = {"dishID", "restaurantID"}, unique = true)})
+@Entity(tableName = "menu_table")
 public class Menu {
+    @PrimaryKey(autoGenerate = true)
+    private int menuID;
     private int restaurantID;
-    private int dishID;
+    private int categoryID;
 
-    public Menu(int restaurantID, int dishID) {
+    public Menu(int restaurantID, int categoryID) {
         this.restaurantID = restaurantID;
-        this.dishID = dishID;
+        this.categoryID = categoryID;
+    }
+
+    public void setMenuID(int menuID) {
+        this.menuID = menuID;
+    }
+
+    public int getMenuID() {
+        return menuID;
     }
 
     public int getRestaurantID() {
         return restaurantID;
     }
 
-    public int getDishID() {
-        return dishID;
+    public int getCategoryID() {
+        return categoryID;
     }
 }

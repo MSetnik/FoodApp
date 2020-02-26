@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "restaurant_table", foreignKeys = @ForeignKey(entity = Delivery.class, parentColumns = "deliveryOption", childColumns = "delivery", onDelete = CASCADE, onUpdate = CASCADE), indices = {@Index(value = {"delivery"}, unique = true)})
+@Entity(tableName = "restaurant_table")
 public class Restaurant {
 
     @PrimaryKey(autoGenerate = true)

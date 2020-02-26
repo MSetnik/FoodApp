@@ -3,8 +3,10 @@ package com.example.foodapp.Entity;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 @Entity(tableName = "dishCategory_table")
-public class DishCategory {
+public class DishCategory implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int categoryID;
 

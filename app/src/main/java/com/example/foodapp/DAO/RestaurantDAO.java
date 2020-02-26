@@ -15,15 +15,19 @@ import java.util.List;
 public interface RestaurantDAO {
 
     @Insert
-    void Insert (Restaurant restaurant);
+    void Insert (Restaurant... restaurant);
 
     @Update
-    void Update(Restaurant restaurant);
+    void Update(Restaurant... restaurant);
 
     @Delete
-    void Delete(Restaurant restaurant);
+    void Delete(Restaurant... restaurant);
 
     @Query("SELECT * FROM restaurant_table")
     LiveData<List<Restaurant>>GetAllRestaurants();
+
+    @Query("SELECT * FROM restaurant_table WHERE restaurantId = :restaurantID")
+    LiveData<List<Restaurant>>GetRestaurantFromWishlist(int restaurantID);
+
 
 }

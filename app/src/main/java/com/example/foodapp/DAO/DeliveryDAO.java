@@ -1,5 +1,6 @@
 package com.example.foodapp.DAO;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -13,14 +14,14 @@ import java.util.List;
 @Dao
 public interface DeliveryDAO {
     @Insert
-    void Insert(Delivery dish);
+    void Insert(Delivery delivery);
 
     @Update
-    void Update (Delivery dish);
+    void Update (Delivery delivery);
 
     @Delete
-    void Delete (Delivery dish);
+    void Delete (Delivery delivery);
 
     @Query("SELECT * FROM delivery_table")
-    List<Delivery> GetAllDelivery();
+    LiveData<List<Delivery>> GetAllDelivery();
 }
