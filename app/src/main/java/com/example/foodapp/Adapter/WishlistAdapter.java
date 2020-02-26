@@ -58,7 +58,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.WishLi
         holder.RestaurantName.setText(restaurant.getRestaurantName());
         holder.RestaurantPhone.setText(restaurant.getPhone());
         holder.RestaurantDelivery.setText(Dostava);
-        
+
         for (int i=0;i<lRestWishlist.size();i++)
         {
             if (restaurant.getRestaurantId() == lRestWishlist.get(i).getRestaurantID())
