@@ -27,6 +27,9 @@ public class FoodAppViewModel extends AndroidViewModel {
     private LiveData<List<DishSizePrice>>lDishSizePrice;
     private static String TAG = "foodapp";
 
+    private List<Wishlist>lRestaurantWishlist = new ArrayList<>();
+    private OnWishlistFinishListenerVM onWishlistFinishListenerVM;
+
 
     //Context is Application instead context because view model can outlive activity (memory leak)
     public FoodAppViewModel(@NonNull Application application) {
@@ -38,6 +41,13 @@ public class FoodAppViewModel extends AndroidViewModel {
         allCategory = repository.GetAllCategory();
         lDelivery = repository.GetlDelivery();
         lDishSizePrice = repository.GetlDishSizePrice();
+
+        repository.SetOnFinishListener(new Repository.OnWishlistFinishListener() {
+            @Override
+            public void OnFinish(List<Wishlist> wishlist) {
+                onWishlistFinishListenerVM.OnFinish(wishlist);
+            }
+        });
 
     }
 
@@ -85,9 +95,9 @@ public class FoodAppViewModel extends AndroidViewModel {
         repository.AddToWishlist(wishlist);
     }
 
-    public LiveData<List<Wishlist>>GetRestaurantWishlist(int restaurantID)
+    public void GetRestaurantWishlist(final int restaurantID)
     {
-        return repository.GetRestaurantWishlist(restaurantID);
+         repository.GetRestaurantWishlist(restaurantID);
     }
 
 
@@ -99,5 +109,22 @@ public class FoodAppViewModel extends AndroidViewModel {
     public void DeleteSelectedItem(Wishlist wishlist)
     {
         repository.DeleteSelectedItem(wishlist);
+    }
+
+    public LiveData<List<Wishlist>> GetWishlist()
+    {
+        return repository.GetWishlist();
+    }
+
+
+
+    public interface OnWishlistFinishListenerVM
+    {
+        void OnFinish(List<Wishlist> wishlist);
+    }
+
+    public void SetOnFinishListener(OnWishlistFinishListenerVM listenerVM)
+    {
+        this.onWishlistFinishListenerVM = listenerVM;
     }
 }

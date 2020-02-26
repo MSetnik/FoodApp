@@ -26,7 +26,7 @@ public interface WishlistDAO {
     LiveData<List<Wishlist>>GetAllFromWishlist();
 
     @Query("SELECT * FROM wishlist_table WHERE restaurantID = :restaurantID")
-    LiveData<List<Wishlist>>GetRestaurantWishlist(int restaurantID);
+    List<Wishlist>GetRestaurantWishlist(int restaurantID);
 
     @Query("DELETE FROM wishlist_table")
     void DeleteWishlist();

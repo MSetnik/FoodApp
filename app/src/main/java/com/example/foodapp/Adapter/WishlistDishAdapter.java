@@ -9,11 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.foodapp.Entity.Wishlist;
 import com.example.foodapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class WishlistDishAdapter extends RecyclerView.Adapter<WishlistDishAdapter.WishlistDishVH> {
 
-    private List<Wishlist>lWishlist;
+    private List<Wishlist>lWishlist = new ArrayList<>();
     private OnButtonClickListener onButtonClickRemove;
 
     @NonNull
@@ -36,6 +37,7 @@ public class WishlistDishAdapter extends RecyclerView.Adapter<WishlistDishAdapte
     public void setlWishlist(List<Wishlist>wishlist)
     {
         this.lWishlist = wishlist;
+        notifyDataSetChanged();
     }
 
     @Override

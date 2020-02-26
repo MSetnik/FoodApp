@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.locks.ReentrantLock;
 
 public  class WishlistActivity extends AppCompatActivity {
 
@@ -37,6 +38,7 @@ public  class WishlistActivity extends AppCompatActivity {
     private List<Restaurant>lRestaurants = new ArrayList<>();
     private RestaurantWishlist restaurantWishlist;
     private List<RestaurantWishlist> lRestaurantWishlist = new ArrayList<>();
+    private List<List<Wishlist>> lRestWishlist = new ArrayList<>();
 
     private static String TAG ="foodapp";
     @Override
@@ -47,6 +49,7 @@ public  class WishlistActivity extends AppCompatActivity {
         viewmodel = ViewModelProviders.of(this).get(FoodAppViewModel.class);
         RecyclerViewBind();
         GetAllRestaurants();
+
     }
 
 
@@ -54,7 +57,7 @@ public  class WishlistActivity extends AppCompatActivity {
         viewmodel.getAllRestaurants().observe(this, new Observer<List<Restaurant>>() {
             @Override
             public void onChanged(List<Restaurant> restaurants) {
-                wishlistAdapter.setlRestaurants(restaurants);
+                //wishlistAdapter.setlRestaurants(restaurants);
                 lRestaurants = restaurants;
                 GetRestaurantID();
             }
@@ -73,20 +76,29 @@ public  class WishlistActivity extends AppCompatActivity {
 
     public void GetRestaurantWishlistFromID(final int restaurantID)
     {
-        viewmodel.GetRestaurantWishlist(restaurantID).observe(this, new Observer<List<Wishlist>>() {
+        viewmodel.GetRestaurantWishlist(restaurantID);
+
+        viewmodel.SetOnFinishListener(new FoodAppViewModel.OnWishlistFinishListenerVM() {
             @Override
-            public void onChanged(List<Wishlist> wishlists) {
-                for (int i = 0; i < wishlists.size(); i++) {
-                    if(restaurantID == wishlists.get(i).getRestaurantID()) {
-                        restaurantWishlist = new RestaurantWishlist(wishlists.get(i).getRestaurantID(), wishlists.get(i).getRestaurantName(), wishlists);
+            public void OnFinish(List<Wishlist> wishlist) {
+                lRestWishlist.add(wishlist);
+                if(lRestaurants.size() == lRestWishlist.size()){
+                    for ( int i=0;i<lRestaurants.size();i++ ){
+                        RestaurantWishlist restaurantWishlist = new RestaurantWishlist(lRestaurants.get(i).getRestaurantId(), lRestaurants.get(i).getRestaurantName(), lRestaurants.get(i).getPhone(), lRestaurants.get(i).getDelivery(), lRestWishlist.get(i));
                         lRestaurantWishlist.add(restaurantWishlist);
                     }
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            wishlistAdapter.setlWishlist(lRestaurantWishlist);
+                        }
+                    });
                 }
-                wishlistAdapter.setlWishlist(lRestaurantWishlist);
             }
-
         });
     }
+
+
 
 
     private void RecyclerViewBind()
@@ -96,6 +108,17 @@ public  class WishlistActivity extends AppCompatActivity {
 
         wishlistAdapter = new WishlistAdapter(getApplicationContext(), viewmodel);
         recyclerView.setAdapter(wishlistAdapter);
+
+        wishlistAdapter.SetOnClickListenerVanjski(new WishlistAdapter.OnButtonClickListenerVanjski() {
+            @Override
+            public void OnBtnClickRemove(Wishlist wishlist) {
+                viewmodel.DeleteSelectedItem(wishlist);
+                Toast.makeText(WishlistActivity.this, "Jelo obrisano", Toast.LENGTH_SHORT).show();
+                lRestWishlist.clear();
+                lRestaurantWishlist.clear();
+                GetRestaurantID();
+            }
+        });
     }
 
 }

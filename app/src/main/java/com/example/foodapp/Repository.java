@@ -19,6 +19,7 @@ import com.example.foodapp.Entity.Menu;
 import com.example.foodapp.Entity.Restaurant;
 import com.example.foodapp.Entity.Wishlist;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Repository {
@@ -37,6 +38,9 @@ public class Repository {
     private LiveData<List<Delivery>>lDelivery;
     private LiveData<List<DishSizePrice>>lDishSizePrice;
 
+    private List<Wishlist>lRestaurantWishlist = new ArrayList<>();
+
+    private OnWishlistFinishListener onWishlistFinishListener;
 
 
     public Repository (Application application){
@@ -112,9 +116,16 @@ public class Repository {
         });
     }
 
-    public LiveData<List<Wishlist>>GetRestaurantWishlist(int restaurantID)
+    public void GetRestaurantWishlist(final int restaurantID)
     {
-        return wishlistDAO.GetRestaurantWishlist(restaurantID);
+        AppExecutor.getInstance().getDiskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                lRestaurantWishlist = wishlistDAO.GetRestaurantWishlist(restaurantID);
+                onWishlistFinishListener.OnFinish(lRestaurantWishlist);
+            }
+        });
+
     }
 
 
@@ -138,4 +149,19 @@ public class Repository {
         });
     }
 
+    public LiveData<List<Wishlist>> GetWishlist()
+    {
+        return wishlistDAO.GetAllFromWishlist();
+    }
+
+
+    public interface OnWishlistFinishListener
+    {
+        void OnFinish(List<Wishlist> wishlist);
+    }
+
+    public void SetOnFinishListener(OnWishlistFinishListener listener)
+    {
+        this.onWishlistFinishListener = listener;
+    }
 }
