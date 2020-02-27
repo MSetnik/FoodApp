@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView bottomNavigationView;
     private RecyclerView recyclerView;
 
+    private Button btnWishlist;
+
     private String TAG = "foodapp";
 
     @Override
@@ -47,6 +51,16 @@ public class MainActivity extends AppCompatActivity {
 
         rAdapter = new RestaurantsAdapter();
         recyclerView.setAdapter(rAdapter);
+
+        btnWishlist = findViewById(R.id.buttonWishlist);
+
+        btnWishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, WishlistActivity.class);
+                startActivity(intent);
+            }
+        });
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.restaurantsTab);

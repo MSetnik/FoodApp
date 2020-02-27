@@ -6,6 +6,6 @@
         android:id="@+id/wishlistIcon"
         android:icon="@drawable/ic_list_black_24dp"
         android:title="Wishlist"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
 
 </menu>

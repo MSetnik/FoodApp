@@ -6,10 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".Activity.MainActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout= "@layout/toolbar"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_restaurants"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
         tools:listitem="@layout/restaurants"/>
 
 

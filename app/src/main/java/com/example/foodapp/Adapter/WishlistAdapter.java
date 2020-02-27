@@ -31,6 +31,8 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.WishLi
     private Context context;
     private FoodAppViewModel viewModel;
     private OnButtonClickListenerVanjski onButtonClickListenerVanjski;
+    private CallRestaurantListener callRestaurantListener;
+    private List<String> lRestPhone = new ArrayList<>();
 
     public WishlistAdapter(Context context, FoodAppViewModel viewModel) {
         this.context = context;
@@ -59,7 +61,8 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.WishLi
         holder.RestaurantName.setText(restaurant.getRestaurantName());
         holder.RestaurantPhone.setText(restaurant.getPhone());
         holder.RestaurantDelivery.setText(Dostava);
-
+        String sRestPhone = restaurant.getPhone();
+        lRestPhone.add(sRestPhone);
 
         WishlistDishAdapter wishlistDishAdapter = new WishlistDishAdapter();
         wishlistDishAdapter.setlWishlist(restaurant.getlRestaurantWishlist());
@@ -108,7 +111,24 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.WishLi
             RestaurantPhone = itemView.findViewById(R.id.RestaurantWishlistPhone);
             RestaurantDelivery = itemView.findViewById(R.id.RestaurantWishlistDelivery);
             DishRecycler = itemView.findViewById(R.id.recyclerViewWishlistDish);
+
+            RestaurantPhone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    callRestaurantListener.OnPhoneClick(lRestPhone.get(position));
+                }
+            });
         }
+    }
+
+    public interface CallRestaurantListener
+    {
+        void OnPhoneClick(String tel);
+    }
+
+    public void SetOnClickListenerPhone(CallRestaurantListener callRestaurantListener){
+        this.callRestaurantListener = callRestaurantListener;
     }
 
     public interface OnButtonClickListenerVanjski

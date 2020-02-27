@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.foodapp.Adapter.DishCategoryAdapter;
 import com.example.foodapp.Entity.DishCategory;
@@ -26,13 +28,23 @@ public class MenuActivity extends AppCompatActivity{
     private DishCategoryAdapter dAdapter;
     private BottomNavigationView bottomNavigationView;
     private RecyclerView recyclerView;
+    private Button btnWishlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
         viewModel = ViewModelProviders.of(this).get(FoodAppViewModel.class);
+
+        btnWishlist = findViewById(R.id.buttonWishlist);
+
+        btnWishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, WishlistActivity.class);
+                startActivity(intent);
+            }
+        });
 
         RecyclerViewBind();
         CategoryListener();

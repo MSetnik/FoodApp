@@ -38,12 +38,23 @@ public class DishActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private static String TAG = "foodapp";
     private int DishRestaurantID;
+    private Button btnWishlist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dish);
         viewModel = ViewModelProviders.of(this).get(FoodAppViewModel.class);
+
+        btnWishlist = findViewById(R.id.buttonWishlist);
+
+        btnWishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DishActivity.this, WishlistActivity.class);
+                startActivity(intent);
+            }
+        });
 
         RecyclerViewBind();
         GetCategoryID();

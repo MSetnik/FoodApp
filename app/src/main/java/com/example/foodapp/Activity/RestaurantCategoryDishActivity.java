@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.foodapp.Adapter.DishAdapter;
@@ -34,6 +36,7 @@ public class RestaurantCategoryDishActivity extends AppCompatActivity {
     private FoodAppViewModel viewModel;
     private static String TAG = "foodapp";
     private int DishRestaurantID;
+    private Button btnWishlist;
 
 
     @Override
@@ -49,6 +52,16 @@ public class RestaurantCategoryDishActivity extends AppCompatActivity {
             public void onChanged(List<Dish> dishes) {
                 dishAdapter.setlDish(dishes);
                 Log.d(TAG, "onChanged: " + dishes.size());
+            }
+        });
+
+        btnWishlist = findViewById(R.id.buttonWishlist);
+
+        btnWishlist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RestaurantCategoryDishActivity.this, WishlistActivity.class);
+                startActivity(intent);
             }
         });
         GetWishlist();

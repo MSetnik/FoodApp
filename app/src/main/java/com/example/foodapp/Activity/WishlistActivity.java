@@ -6,9 +6,12 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -39,12 +42,16 @@ public  class WishlistActivity extends AppCompatActivity {
     private RestaurantWishlist restaurantWishlist;
     private List<RestaurantWishlist> lRestaurantWishlist = new ArrayList<>();
     private List<List<Wishlist>> lRestWishlist = new ArrayList<>();
+    private Button btnWishlist;
 
     private static String TAG ="foodapp";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wishlist);
+
+        btnWishlist = findViewById(R.id.buttonWishlist);
+        btnWishlist.setVisibility(View.GONE);
 
         viewmodel = ViewModelProviders.of(this).get(FoodAppViewModel.class);
         RecyclerViewBind();
@@ -91,11 +98,14 @@ public  class WishlistActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             wishlistAdapter.setlWishlist(lRestaurantWishlist);
+                            CallRestaurant();
                         }
                     });
                 }
             }
         });
+
+
     }
 
 
@@ -119,6 +129,19 @@ public  class WishlistActivity extends AppCompatActivity {
                 GetRestaurantID();
             }
         });
+    }
+
+    public void CallRestaurant()
+    {
+        wishlistAdapter.SetOnClickListenerPhone(new WishlistAdapter.CallRestaurantListener() {
+            @Override
+            public void OnPhoneClick(String tel) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + tel));
+                startActivity(intent);
+            }
+        });
+
     }
 
 }
