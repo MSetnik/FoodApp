@@ -46,6 +46,17 @@ public class DishActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dish);
         viewModel = ViewModelProviders.of(this).get(FoodAppViewModel.class);
 
+
+        WishlistClick();
+        RecyclerViewBind();
+        GetCategoryID();
+        GetDishOfCategory();
+        AddToWishlist();
+
+    }
+
+    private void WishlistClick()
+    {
         btnWishlist = findViewById(R.id.buttonWishlist);
 
         btnWishlist.setOnClickListener(new View.OnClickListener() {
@@ -55,12 +66,6 @@ public class DishActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        RecyclerViewBind();
-        GetCategoryID();
-        GetDishOfCategory();
-        AddToWishlist();
-
     }
 
     private void GetCategoryID()
@@ -93,7 +98,7 @@ public class DishActivity extends AppCompatActivity {
     }
 
 
-    public void AddToWishlist()
+    private void AddToWishlist()
     {
         dAdapter.SetOnButtonListener(new DishAdapter.OnButtonDishListener() {
             @Override
@@ -105,7 +110,7 @@ public class DishActivity extends AppCompatActivity {
         });
     }
 
-    public void GetRestaurantFromWishlist(final Dish dish)
+    private void GetRestaurantFromWishlist(final Dish dish)
     {
         viewModel.GetRestaurantFromWishlist(DishRestaurantID).observe(this, new Observer<List<Restaurant>>() {
             @Override

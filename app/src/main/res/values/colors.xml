@@ -3,7 +3,6 @@
     <color name="colorPrimary">#00A842</color>
     <color name="colorPrimaryDark">#01832C</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="colorNotSelected">#FFFF</color>
-    <color name="colorSelected">#FF2196F3</color>
-    <color name="colorNavBar">#FFE6E3E3</color>
+    <color name="colorButtonAdd">#FFB9F6CA</color>
+    <color name="colorButtonRemove">#FF8A80</color>
 </resources>

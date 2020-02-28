@@ -61,6 +61,7 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.WishLi
         holder.RestaurantName.setText(restaurant.getRestaurantName());
         holder.RestaurantPhone.setText(restaurant.getPhone());
         holder.RestaurantDelivery.setText(Dostava);
+
         String sRestPhone = restaurant.getPhone();
         lRestPhone.add(sRestPhone);
 
@@ -71,8 +72,6 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.WishLi
         wishlistDishAdapter.SetOnClickListener(new WishlistDishAdapter.OnButtonClickListener() {
             @Override
             public void OnBtnClickRemove(Wishlist wishlist) {
-                //viewModel.DeleteSelectedItem(wishlist);
-                //Toast.makeText(context, "Jelo obrisano", Toast.LENGTH_SHORT).show();
                 onButtonClickListenerVanjski.OnBtnClickRemove(wishlist);
             }
         });
@@ -89,12 +88,6 @@ public class WishlistAdapter extends RecyclerView.Adapter<WishlistAdapter.WishLi
         this.lRestWishlist = restWishlist;
         notifyDataSetChanged();
     }
-
-   /* public void setlRestaurants(List<Restaurant> restaurants){
-        this.lRestaurants = restaurants;
-        notifyDataSetChanged();
-    }*/
-
 
 
     class WishListVH extends RecyclerView.ViewHolder

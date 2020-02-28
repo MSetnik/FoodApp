@@ -62,15 +62,23 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            android:id="@+id/btnAdd"
+
+        <FrameLayout
             android:layout_width="30dp"
             android:layout_height="30dp"
             app:layout_constraintLeft_toRightOf="@id/ContainerDishInf"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:background="@drawable/btnadd"/>
+            android:background="@color/colorButtonAdd">
+
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/btnadd"/>
+        </FrameLayout>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

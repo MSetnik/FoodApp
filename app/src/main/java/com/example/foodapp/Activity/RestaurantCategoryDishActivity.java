@@ -43,18 +43,19 @@ public class RestaurantCategoryDishActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_category_dish);
+        viewModel = ViewModelProviders.of(this).get(FoodAppViewModel.class);
+
         GetRestaurantID();
         RecyclerViewBind();
+        GetRestaurantCategoryDish();
 
-        viewModel = ViewModelProviders.of(this).get(FoodAppViewModel.class);
-        viewModel.GetRestaurantCategoryDish(restaurantID, categoryID).observe(this, new Observer<List<Dish>>() {
-            @Override
-            public void onChanged(List<Dish> dishes) {
-                dishAdapter.setlDish(dishes);
-                Log.d(TAG, "onChanged: " + dishes.size());
-            }
-        });
+        WishlistClick();
+        GetWishlist();
+    }
 
+
+    private void WishlistClick()
+    {
         btnWishlist = findViewById(R.id.buttonWishlist);
 
         btnWishlist.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +65,19 @@ public class RestaurantCategoryDishActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        GetWishlist();
+    }
+
+
+    private void GetRestaurantCategoryDish()
+    {
+        viewModel.GetRestaurantCategoryDish(restaurantID, categoryID).observe(this, new Observer<List<Dish>>() {
+            @Override
+            public void onChanged(List<Dish> dishes) {
+                dishAdapter.setlDish(dishes);
+                Log.d(TAG, "onChanged: " + dishes.size());
+            }
+        });
+
     }
 
 
@@ -86,7 +99,7 @@ public class RestaurantCategoryDishActivity extends AppCompatActivity {
         recyclerView.setAdapter(dishAdapter);
     }
 
-    public void GetWishlist()
+    private void GetWishlist()
     {
         dishAdapter.SetOnButtonListener(new DishAdapter.OnButtonDishListener() {
             @Override
@@ -98,7 +111,7 @@ public class RestaurantCategoryDishActivity extends AppCompatActivity {
         });
     }
 
-    public void GetRestaurantFromWishlist(final Dish dish)
+    private void GetRestaurantFromWishlist(final Dish dish)
     {
         viewModel.GetRestaurantFromWishlist(DishRestaurantID).observe(this, new Observer<List<Restaurant>>() {
             @Override

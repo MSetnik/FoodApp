@@ -60,7 +60,7 @@ public  class WishlistActivity extends AppCompatActivity {
     }
 
 
-    public List<Restaurant> GetAllRestaurants(){
+    private List<Restaurant> GetAllRestaurants(){
         viewmodel.getAllRestaurants().observe(this, new Observer<List<Restaurant>>() {
             @Override
             public void onChanged(List<Restaurant> restaurants) {
@@ -72,7 +72,7 @@ public  class WishlistActivity extends AppCompatActivity {
         return lRestaurants;
     }
 
-    public void GetRestaurantID()
+    private void GetRestaurantID()
     {
         for(int i=0;i<lRestaurants.size();i++)
         {
@@ -81,7 +81,7 @@ public  class WishlistActivity extends AppCompatActivity {
         }
     }
 
-    public void GetRestaurantWishlistFromID(final int restaurantID)
+    private void GetRestaurantWishlistFromID(final int restaurantID)
     {
         viewmodel.GetRestaurantWishlist(restaurantID);
 
@@ -131,7 +131,7 @@ public  class WishlistActivity extends AppCompatActivity {
         });
     }
 
-    public void CallRestaurant()
+    private void CallRestaurant()
     {
         wishlistAdapter.SetOnClickListenerPhone(new WishlistAdapter.CallRestaurantListener() {
             @Override

@@ -36,6 +36,16 @@ public class MenuActivity extends AppCompatActivity{
         setContentView(R.layout.activity_menu);
         viewModel = ViewModelProviders.of(this).get(FoodAppViewModel.class);
 
+        RecyclerViewBind();
+        CategoryListener();
+        BottomNavigation();
+        GetAllCategory();
+        WishlistClick();
+
+    }
+
+    private void WishlistClick()
+    {
         btnWishlist = findViewById(R.id.buttonWishlist);
 
         btnWishlist.setOnClickListener(new View.OnClickListener() {
@@ -45,12 +55,6 @@ public class MenuActivity extends AppCompatActivity{
                 startActivity(intent);
             }
         });
-
-        RecyclerViewBind();
-        CategoryListener();
-        BottomNavigation();
-        GetAllCategory();
-
     }
 
     private void CategoryListener()

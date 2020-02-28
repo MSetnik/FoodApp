@@ -31,7 +31,26 @@ public class RestaurantMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_menu);
 
+        viewModel = ViewModelProviders.of(this).get(FoodAppViewModel.class);
+        GetRestaurantCategoriesFromID();
+        RecyclerViewBind();
+        WishlistClick();
+        GetRestaurantCategory();
+        CategoryListener();
+    }
 
+    private void GetRestaurantCategory()
+    {
+        viewModel.GetRestaurantCategory(restaurantID).observe(this, new Observer<List<DishCategory>>() {
+            @Override
+            public void onChanged(List<DishCategory> dishCategories) {
+                DishCategoryAdapter.setlCategories(dishCategories);
+            }
+        });
+    }
+
+    private void WishlistClick()
+    {
         btnWishlist = findViewById(R.id.buttonWishlist);
 
         btnWishlist.setOnClickListener(new View.OnClickListener() {
@@ -41,21 +60,9 @@ public class RestaurantMenuActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        GetRestaurantCategories();
-        RecyclerViewBind();
-
-        viewModel = ViewModelProviders.of(this).get(FoodAppViewModel.class);
-        viewModel.GetRestaurantCategory(restaurantID).observe(this, new Observer<List<DishCategory>>() {
-            @Override
-            public void onChanged(List<DishCategory> dishCategories) {
-                DishCategoryAdapter.setlCategories(dishCategories);
-            }
-        });
-        CategoryListener();
     }
 
-    private void GetRestaurantCategories()
+    private void GetRestaurantCategoriesFromID()
     {
 
         Bundle bundle = getIntent().getExtras();
